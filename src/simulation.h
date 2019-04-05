@@ -2,6 +2,7 @@
 #define SIMULATION_H
 
 #include "node.h"
+#include <string>
 #include "nodelist.h"
 
 class Node;
@@ -26,6 +27,10 @@ class Simulation
     float trailRadius = 0.5;
     NodeList list;
 
+    bool verbose = false;
+
     void Simulate();
+    void LoadSettings(std::string filename);
+    void LoadParticles(std::string filename);
 };
 #endif

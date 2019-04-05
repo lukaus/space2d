@@ -15,6 +15,7 @@ class Node
       Particle* particle = nullptr;
       sf::CircleShape* pix = nullptr;
       sf::Color trailColor;
+      float trailRadius = 0.5;
 
       int trailCount = 0;
       Node* trailHead = nullptr;

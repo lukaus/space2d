@@ -1,0 +1,23 @@
+# Particle definition file
+# particle defined as: ([] are optional arguments
+# X Y MASS [X_VEL=0] [Y_VEL=0] [RADIUS=0.5] [RedValue=255 GreenValue=255 BlueValue=255] [TrailRadius=0.5] [TrailRed=245 TrailGreen=245 TrailBlue=220]
+# ^ this syntax is pretty delicate unfortunately, pay attention to the grouping (either all three color values for a color or no values must be defined)
+
+# These particles assume you are using settings.cfg
+
+# The Sun (assumes settings.cfg)
+250 250 1.989E30 0 0 3 255 255 0
+
+# Mercury
+
+
+# Venus
+
+
+# Earth
+397 250 5.972E24 0 0.95828 0.5 0 128 255 1 50 50 50
+
+
+# Mars
+
+

@@ -7,36 +7,27 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
     Simulation sim;
+    if(argc > 3)
+    {
+        cerr << "Syntax is 'space2d [settings file] [particles file]'"
+            << "\n\t [settings file] and [particles file] are optional and default to settings.cfg and particles.dat respectively.\n";
+        return 0;
+    }
+    string settingsFilename = "settings.cfg";
+    string particleFilename = "particles.dat";
+    if(argc > 1)
+        settingsFilename = (argv[1]);
+    else if(argc > 2)
+        particleFilename = (argv[2]);
 
-    sf::RenderWindow window(sf::VideoMode(sim.winX, sim.winY), "Space2d v0.1");
+    sim.LoadSettings(settingsFilename);
+    sim.LoadParticles(particleFilename);
+
+    sf::RenderWindow window(sf::VideoMode(sim.winX, sim.winY), "Space2d v0.8");
     window.setFramerateLimit(sim.ticksPerSecond);
-
-    sim.list.AddNode(1.989E30); // mass of sun
-    sim.list.AddNode(1.989E30); // mass of sun
-    sim.list.AddNode(1.989E30); // mass of sun
-    //AddNode(5.972E24); // mass of earth
-
-
-    sim.list[0].SetColor(255,255,0);
-    sim.list[0].next->SetColor(128,128,255);
-
-    sim.list.head->SetPos(250,250);
-    sim.list.head->next->SetPos(397,250);
-
-    sim.list.head->next->next->SetColor(255,128,128);
-    sim.list.head->next->next->SetPos(597,250);
-    //head->next->SetPos(399,250);
-
-    sim.list.head->particle->y_vel = -0.3; // Earth orbits at 30 km/s
-    sim.list.head->next->particle->y_vel = 0.3; // Earth orbits at 30 km/s
-    sim.list.head->next->next->particle->x_vel = -0.3; // Earth orbits at 30 km/s
-
-    sim.list.head->SetTrailColor(245, 245, 220);
-    sim.list.head->next->SetTrailColor(245, 245, 220);
-    sim.list.head->next->next->SetTrailColor(245, 245, 220);
 
     cerr << "Window is (" << sim.winX << ", " << sim.winY << ")\n";
     cerr << "Trails are " << sim.trailMaxLen << " pixels long updated every " << sim.trailFreq << " ticks.\n";
