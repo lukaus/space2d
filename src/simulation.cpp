@@ -90,7 +90,6 @@ void Simulation::Simulate()
                 cout << "vy " << yvBefore << " -> ";
                 cout << cur->particle->y_vel << endl;
             }
-            cout << cur->particle->y_vel << endl;
         
             chk = chk->next;
         }
@@ -102,6 +101,8 @@ void Simulation::Simulate()
     for(int i = 0; i < list.count; i++)
     {
         cur->Update(this);
+        if(verbose)
+            cerr << cur << ": " << dist(cur, list.head) << endl;
         cur->Status();
         cur = cur->next;
     }
