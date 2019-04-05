@@ -1,9 +1,10 @@
-MAIN 		= sim.cpp
-CLASSES		= #particle.cpp
-COMPFLAGS	= -std=c++11 -o
+MAIN 		= space2d.cpp
+CLASSES		= src/simulation.cpp src/node.cpp src/nodelist.cpp src/particle.cpp
+COMPFLAGS	= -std=c++17 -o
 LINKFLAGS	= -lsfml-graphics -lsfml-window -lsfml-system
 COMPILER 	= g++
 EXEC		= space2d 
+DEBUG_EXEC	= dbg-space2d 
 
 all: main
 
@@ -13,3 +14,5 @@ main : $(PROGRAMS)
 pure : 
 	rm $(EXEC)
 
+debug: $(PROGRAMS)
+	$(COMPILER) -g $(COMPFLAGS) $(DEBUG_EXEC) $(MAIN) $(CLASSES) $(LINKFLAGS)

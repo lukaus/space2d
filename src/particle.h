@@ -13,7 +13,8 @@ class Particle
         long double x_vel = 0.0;
         long double y_vel = 0.0;
 
-        Particle(){}
+        Particle();
+
     protected:
 };
 #endif
