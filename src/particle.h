@@ -1,12 +1,15 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
+#include <string>
 //
 // Basic particle class
+
 
 class Particle
 {
     private:
     public:
+        std::string name;
         double long x = 0;
         double long y = 0;
         long double mass = 0.0;

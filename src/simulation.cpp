@@ -59,7 +59,8 @@ void Simulation::Simulate()
             long double d = dist(cur, chk) * distanceScale; // convert meters to  million km
 
             // Calculate acceleration
-            long double a = (gravityConstant * chk->particle->mass) / (pow(d, 2));
+            long double F = gravityConstant * ((chk->particle->mass * cur->particle->mass) / (pow(d, 2)));
+            long double a = F / cur->particle->mass; // F = ma, so a = F/m
 
             long double theta = angle(cur,chk); 
 
@@ -132,6 +133,9 @@ void Simulation::LoadSettings(string filename)
     {
         if(startsWith(line, "GRAV=") && line.length() > 5)
             gravityConstant = stof(line.substr(5, line.length() - 5));
+
+        if(line == "PAUSED")
+            paused = true;
 
         if(line == "VERBOSE")
             verbose = true;

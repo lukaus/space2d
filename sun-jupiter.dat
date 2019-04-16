@@ -6,18 +6,8 @@
 # These particles assume you are using settings.cfg
 
 # The Sun (assumes settings.cfg)
-250 250 1.989E30 0 0 3 255 255 0
+Sun 500 500 1.989E30 0 0 3 255 255 0
 
-# Mercury
-
-
-# Venus
-
-
-# Earth
-397 250 5.972E24 0 0.95828 0.5 0 128 255 1 50 50 50
-
-
-# Mars
-
+# Jupiter 
+Jupiter 397 500 1.898E28 0 0.95828 0.5 128 128 50 1 50 50 50
 

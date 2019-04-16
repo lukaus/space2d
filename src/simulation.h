@@ -28,6 +28,7 @@ class Simulation
     NodeList list;
 
     bool verbose = false;
+    bool paused = false;
 
     void Simulate();
     void LoadSettings(std::string filename);

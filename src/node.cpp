@@ -107,7 +107,8 @@ void Node::UpdateTrail(Simulation* sim)
 
 void Node::Status()
 {
-    cout << this << ", (" << this->particle->x << ", " << this->particle->y << "), [" 
+    cout << this->particle->name << " " << "{" << this->particle->mass << "},\t("
+        << this->particle->x << ", " << this->particle->y << "), [" 
         << this->particle->x_vel << ", " << this->particle->y_vel << "]\n";
 }
 

@@ -10,19 +10,23 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     Simulation sim;
+    bool dragging = false;
     if(argc > 3)
     {
-        cerr << "Syntax is 'space2d [settings file] [particles file]'"
-            << "\n\t [settings file] and [particles file] are optional and default to settings.cfg and particles.dat respectively.\n";
+        cerr << "Syntax is 'space2d [particles file] [settings file]'"
+            << "\n\t [particles file] and [settings file] are optional and default to settings.cfg and particles.dat respectively.\n";
         return 0;
     }
     string settingsFilename = "settings.cfg";
     string particleFilename = "particles.dat";
     if(argc > 1)
-        settingsFilename = (argv[1]);
-    else if(argc > 2)
-        particleFilename = (argv[2]);
-
+    {
+        particleFilename = (argv[1]);
+    }
+    if(argc > 2)
+    {
+        settingsFilename = (argv[2]);
+    }
     sim.LoadSettings(settingsFilename);
     sim.LoadParticles(particleFilename);
 
@@ -35,9 +39,11 @@ int main(int argc, char* argv[])
     cerr << "Distance per pixel is " << sim.distanceScale <<  "\n"; 
     cerr << "Beginning simulation at " << sim.ticksPerSecond << " ticks/s. \nParticle count: " << sim.list.count << "\n"; 
 
+    sf::Vector2f mPos = window.getView().getCenter();
     while (window.isOpen())
     {
-        sim.Simulate();
+        if(!sim.paused)
+            sim.Simulate();
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -48,6 +54,45 @@ int main(int argc, char* argv[])
                 sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
                 window.setView(sf::View(visibleArea));
             }
+            sf::View view = window.getView();
+            if(event.type == sf::Event::MouseWheelMoved)
+            {
+                if(event.mouseWheel.delta < 0)
+                {
+                    view.zoom(1.25f);
+                }
+                else if(event.mouseWheel.delta > 0)
+                {
+                    view.zoom(0.8f);
+                }
+            }
+            if(event.type == sf::Event::KeyPressed)
+            {
+                if(event.key.code == sf::Keyboard::Space)
+                    sim.paused = !sim.paused;
+                if(event.key.code == sf::Keyboard::Period && sim.paused)
+                    sim.Simulate();
+            }
+            if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+            {
+                cerr << "down ";
+                mPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                dragging = true;
+            }
+            else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+            {
+                cerr << "up ";
+                dragging = false;
+            }
+            else if(event.type == sf::Event::MouseMoved && dragging)
+            {
+                sf::Vector2f curPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                float xMove = mPos.x - curPos.x;
+                float yMove = mPos.y - curPos.y;
+                view.move(xMove, yMove);
+            }
+            mPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            window.setView(view);
         }
 
         window.clear();

@@ -14,45 +14,46 @@ Node NodeList::operator[](int idx)
 bool NodeList::AddNode(std::vector<std::string> part)
 {
     Node* newNode = new Node();
-    if(part.size() > 2)
+    if(part.size() > 3)
     {
-        newNode->SetPos(stof(part[0]), stof(part[1]));
-        newNode->particle->mass = stof(part[2]);
-
-        if(part.size() > 3)
-        {
-            // x_vel
-            newNode->particle->x_vel =stof(part[3]);
-        }
+        newNode->particle->name = part[0];
+        newNode->SetPos(stof(part[1]), stof(part[2]));
+        newNode->particle->mass = stof(part[3]);
 
         if(part.size() > 4)
         {
-            // y_vel
-            newNode->particle->y_vel =stof(part[4]);
+            // x_vel
+            newNode->particle->x_vel =stof(part[4]);
         }
 
         if(part.size() > 5)
         {
-            // particle radius
-            newNode->pix->setRadius(stof(part[5]));
+            // y_vel
+            newNode->particle->y_vel =stof(part[5]);
         }
 
-        if(part.size() > 8)
+        if(part.size() > 6)
         {
-            // particle color (6, 7, 8)
-            newNode->SetColor(stoi(part[6]), stoi(part[7]), stoi(part[8]));
+            // particle radius
+            newNode->pix->setRadius(stof(part[6]));
         }
 
         if(part.size() > 9)
         {
-            // trail radius
-            newNode->trailRadius = stof(part[9]);
+            // particle color (6, 7, 8)
+            newNode->SetColor(stoi(part[7]), stoi(part[8]), stoi(part[9]));
         }
 
-        if(part.size() == 13)
+        if(part.size() > 10)
+        {
+            // trail radius
+            newNode->trailRadius = stof(part[10]);
+        }
+
+        if(part.size() == 14)
         {
             // trail color 
-            newNode->SetTrailColor(stoi(part[10]), stoi(part[11]), stoi(part[12]));
+            newNode->SetTrailColor(stoi(part[11]), stoi(part[12]), stoi(part[13]));
         }
         return AddNode(newNode);
     }
