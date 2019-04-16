@@ -17,8 +17,8 @@ int main(int argc, char* argv[])
             << "\n\t [particles file] and [settings file] are optional and default to settings.cfg and particles.dat respectively.\n";
         return 0;
     }
-    string settingsFilename = "settings.cfg";
-    string particleFilename = "particles.dat";
+    string settingsFilename = "cfg/settings.cfg";
+    string particleFilename = "dat/particles.dat";
     if(argc > 1)
     {
         particleFilename = (argv[1]);

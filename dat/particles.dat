@@ -14,8 +14,11 @@ Sun 250 250 1.989E30 0 0 1 255 255 0
 # Venus
 #Venus 250 358 4.867E24 -1.1086 0 1 201 160 220 0.5 50 50 50
 
-# Earth
+# What earth velocity should be, roughly
 Earth 397 250 5.972E24 0 0.03828 1 0 128 255 1 50 50 50
+
+# What earth velocity actually works, roughly
+Earth_2 103 250 5.972E24 0 -0.93828 1 0 128 255 1 50 50 50
 
 # Mars
 #Mars 259 1 6.39E23 0.696969 0 1 250 100 100 1 50 50 50
