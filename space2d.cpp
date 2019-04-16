@@ -4,8 +4,15 @@
 #include "src/particle.h"
 #include "src/node.h"
 #include "src/simulation.h"
+#include <sys/stat.h>
 
 using namespace std;
+
+bool fileExists(const string& fn)
+{
+    struct stat b;
+    return(stat(fn.c_str(), &b) == 0);
+}
 
 int main(int argc, char* argv[])
 {
@@ -21,11 +28,26 @@ int main(int argc, char* argv[])
     string particleFilename = "dat/particles.dat";
     if(argc > 1)
     {
+        // Make sure files exist
         particleFilename = (argv[1]);
+        if(fileExists(particleFilename) == false)
+            particleFilename = "dat/"+particleFilename;
+        if(fileExists(particleFilename) == false)
+        {
+            cerr << "Cannot access data file \"" << (argv[1]) << "\" either in ./ or ./dat!";
+            return -1;
+        }
     }
     if(argc > 2)
     {
         settingsFilename = (argv[2]);
+        if(fileExists(settingsFilename) == false)
+            settingsFilename = "cfg/"+settingsFilename;
+        if(fileExists(settingsFilename) == false)
+        {
+            cerr << "Cannot access configuration file \"" << (argv[2]) << "\" either in ./ or ./cfg!";
+            return -1;
+        }
     }
     sim.LoadSettings(settingsFilename);
     sim.LoadParticles(particleFilename);
