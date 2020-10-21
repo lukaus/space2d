@@ -17,8 +17,8 @@ class Simulation
   public:
     Simulation();
     int tick = 0;
-    float gravityConstant = 6.673E-11;
-    float distanceScale = 10E8;
+    float gravityConstant = 6.673E-20;
+    float distanceScale = 10E5;
     int winX = 500;
     int winY = 500;
     int ticksPerSecond = 60;

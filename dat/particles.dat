@@ -1,5 +1,5 @@
 # Particle definition file
-# particle defined as: ([] are optional arguments
+# particle listed below  as: ([] are optional arguments
 # Name X Y MASS [X_VEL=0] [Y_VEL=0] [RADIUS=0.5] [RedValue=255 GreenValue=255 BlueValue=255] [TrailRadius=0.5] [TrailRed=245 TrailGreen=245 TrailBlue=220]
 # ^ this syntax is pretty delicate unfortunately, pay attention to the grouping (either all three color values for a color or no values must be defined)
 
@@ -9,17 +9,14 @@
 Sun 250 250 1.989E30 0 0 1 255 255 0
 
 # Mercury
-#Mercury 180 250 3.285E23 0 -1.172 1 219 206 202 0.5 50 50 50
+Mercury 296 250 3.285E23 0 0.5898 1 219 206 202 0.5 50 50 50
 
 # Venus
-#Venus 250 358 4.867E24 -1.1086 0 1 201 160 220 0.5 50 50 50
+Venus 357.48 250 4.867E24 0 0.3526 1 201 160 220 0.5 50 50 50
 
-# What earth velocity should be, roughly
-Earth 397 250 5.972E24 0 0.03828 1 0 128 255 1 50 50 50
-
-# What earth velocity actually works, roughly
-Earth_2 103 250 5.972E24 0 -0.93828 1 0 128 255 1 50 50 50
+# Earth
+Earth   397.09 250 5.972E24 0 0.3029 1 0 128 255 1 50 50 50
 
 # Mars
-#Mars 259 1 6.39E23 0.696969 0 1 250 100 100 1 50 50 50
+Mars 456.2 250 6.39E23 0 0.2650 1 250 100 100 1 50 50 50
 

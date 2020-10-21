@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     sim.LoadSettings(settingsFilename);
     sim.LoadParticles(particleFilename);
 
-    sf::RenderWindow window(sf::VideoMode(sim.winX, sim.winY), "Space2d v0.8");
+    sf::RenderWindow window(sf::VideoMode(sim.winX, sim.winY), "Space2d v0.9");
     window.setFramerateLimit(sim.ticksPerSecond);
 
     cerr << "Window is (" << sim.winX << ", " << sim.winY << ")\n";
@@ -97,13 +97,11 @@ int main(int argc, char* argv[])
             }
             if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
-                cerr << "down ";
                 mPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 dragging = true;
             }
             else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
-                cerr << "up ";
                 dragging = false;
             }
             else if(event.type == sf::Event::MouseMoved && dragging)
