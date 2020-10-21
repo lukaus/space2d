@@ -134,39 +134,41 @@ void Simulation::LoadSettings(string filename)
         if(startsWith(line, "GRAV=") && line.length() > 5)
             gravityConstant = stof(line.substr(5, line.length() - 5));
 
-        if(line == "PAUSED")
+        else if(line == "PAUSED")
             paused = true;
 
-        if(line == "VERBOSE")
+        else if(line == "VERBOSE")
             verbose = true;
 
-        if(startsWith(line, "X=") && line.length() > 2)
+        else if(startsWith(line, "X=") && line.length() > 2)
             winX = stoi(line.substr(2, line.length() - 2));
 
-        if(startsWith(line, "Y=") && line.length() > 2)
+        else if(startsWith(line, "Y=") && line.length() > 2)
             winY = stoi(line.substr(2, line.length() - 2));
 
-        if(startsWith(line, "TPS=") && line.length() > 4)
+        else if(startsWith(line, "TPS=") && line.length() > 4)
             ticksPerSecond = stoi(line.substr(4, line.length() - 4));
 
-        if(startsWith(line, "TRMX=") && line.length() > 5)
+        else if(startsWith(line, "TRMX=") && line.length() > 5)
             trailMaxLen = stoi(line.substr(5, line.length() - 5));
 
-        if(startsWith(line, "TRFQ=") && line.length() > 5)
+        else if(startsWith(line, "TRFQ=") && line.length() > 5)
             trailFreq = stoi(line.substr(5, line.length() - 5));
 
-        if(startsWith(line, "TRRA=") && line.length() > 5)
+        else if(startsWith(line, "TRRA=") && line.length() > 5)
             trailRadius = stof(line.substr(5, line.length() - 5));
 
-        if(startsWith(line, "DSCL=") && line.length() > 5)
+        else if(startsWith(line, "DSCL=") && line.length() > 5)
             distanceScale = stof(line.substr(5, line.length() - 5));
+        else if(startsWith(line, "#") == false && line != "")
+            cerr << "Failed to parse parameter \"" << line << "\"" << endl;
+
 
         getline(in, line);
     }
 
     in.close();
 
-    cerr << "done." << endl;
 }
 
 
