@@ -1,0 +1,36 @@
+# Particle definition file
+# particle listed below  as: ([] are optional arguments
+# Name X Y MASS [X_VEL=0] [Y_VEL=0] [RADIUS=0.5] [RedValue=255 GreenValue=255 BlueValue=255] [TrailRadius=0.5] [TrailRed=245 TrailGreen=245 TrailBlue=220]
+# ^ this syntax is pretty delicate unfortunately, pay attention to the grouping (either all three color values for a color or no values must be defined)
+
+# These particles assume you are using settings.cfg
+
+# The Sun (assumes settings.cfg)
+Sun 250 250 1.989E30 0 0 1 255 255 0
+
+# Mercury
+Mercury 296 250 3.285E23 0 0.5898 1 219 206 202 0.5 50 50 50
+
+# Venus
+Venus 357.48 250 4.867E24 0 0.3526 1 201 160 220 0.5 50 50 50
+
+# Earth
+Earth   397.09 250 5.972E24 0 0.3029 1 0 128 255 1 50 50 50
+
+# Mars
+Mars 456.2 250 6.417E23 0 0.2650 1 250 100 100 1 50 50 50
+
+# Jupiter
+Jupiter 990.52 250 1.89819E27 0 0.1372 1 250 100 100 1 50 50 50
+
+# Saturn
+Saturn 1602.55 250 5.6834E26 0 0.1018 1 250 100 100 1 50 50 50
+
+# Uranus
+Uranus 2991.3 250 8.6813E25 0 0.0711 1 250 100 100 1 50 50 50
+
+# Neptune
+Neptune 4694.45 250 1.02413E26 0 0.0550 1 250 100 100 1 50 50 50
+
+# Pluto
+Pluto 4686.82 250 1.303E22 0 0.0610 1 250 100 100 1 50 50 50
