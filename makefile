@@ -1,5 +1,5 @@
 MAIN 		= space2d.cpp
-CLASSES		= src/simulation.cpp src/node.cpp src/nodelist.cpp src/particle.cpp
+CLASSES		= src/simulation.cpp src/node.cpp src/nodelist.cpp src/particle.cpp src/date.cpp
 COMPFLAGS	= -std=c++17 -o
 LINKFLAGS	= -lsfml-graphics -lsfml-window -lsfml-system
 COMPILER 	= g++

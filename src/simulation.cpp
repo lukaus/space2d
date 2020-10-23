@@ -5,6 +5,7 @@
 #include "node.h"
 #include "nodelist.h"
 #include "simulation.h"
+#include "date.h"
 
 using namespace std;
 
@@ -38,7 +39,9 @@ long double Simulation::y_part(long double angle, long double magnitude) // Get 
 void Simulation::Simulate()
 {
     tick++;
-    cout << "\n===============================\nt= " << tick << endl; 
+    date.addSeconds(1);
+    if(!muteConsole)
+        cout << "\n===============================\nt= " << tick << ", time=[" << date << "]" << endl; 
     Node* cur = list.head;
     for(int i = 0; i < list.count; i++)
     {
@@ -54,7 +57,7 @@ void Simulation::Simulate()
                 continue;
             }
             // Get distance
-            if(verbose)
+            if(verbose && !muteConsole)
                 cur->Status();
             long double d = dist(cur, chk) * distanceScale; // convert meters to  million km
 
@@ -78,7 +81,7 @@ void Simulation::Simulate()
             cur->particle->x_vel += dvx;
             cur->particle->y_vel += dvy;
 
-            if(verbose)
+            if(verbose && !muteConsole)
             {
                 cout << "d: " << d << endl;
                 cout << "a: " << a << endl;
@@ -96,15 +99,17 @@ void Simulation::Simulate()
         }
         cur = cur->next;
     }
-    cout << endl;
+    if(!muteConsole)
+        cout << endl;
     // Now update positions all at once
     cur = list.head;
     for(int i = 0; i < list.count; i++)
     {
         cur->Update(this);
-        if(verbose)
+        if(verbose && !muteConsole)
             cerr << cur << ": " << dist(cur, list.head) << endl;
-        cur->Status();
+        if(!muteConsole)
+            cur->Status();
         cur = cur->next;
     }
 }
@@ -160,9 +165,12 @@ void Simulation::LoadSettings(string filename)
 
         else if(startsWith(line, "DSCL=") && line.length() > 5)
             distanceScale = stof(line.substr(5, line.length() - 5));
+
+        else if(startsWith(line, "TSCL=") && line.length() > 5)
+            timeScale = stof(line.substr(5, line.length() - 5));
+
         else if(startsWith(line, "#") == false && line != "")
             cerr << "Failed to parse parameter \"" << line << "\"" << endl;
-
 
         getline(in, line);
     }
@@ -176,6 +184,10 @@ void Simulation::LoadParticles(string filename)
 {
     cerr << "Loading particles from " << filename << "...\t";
 
+    int year = 2000;
+    int day = 1;
+    int month, minute, second, hour = 0;
+
     ifstream in;
     in.open(filename);
     
@@ -185,13 +197,28 @@ void Simulation::LoadParticles(string filename)
     {
         if(line.length() > 0 && line[0] != '#')
         {
-            istringstream iss(line);
-            vector<string> results(istream_iterator<string>{iss},
-                                     istream_iterator<string>());
-            if(list.AddNode(results))
-                cerr << ".";
+            if(startsWith(line, "YEAR=") && line.length() > 5)
+                date.setYears(stoi(line.substr(5, line.length() - 5)));
+            else if(startsWith(line, "MONTH=") && line.length() > 6)
+                date.setMonths(stoi(line.substr(6, line.length() - 6))-1);
+            else if(startsWith(line, "DAY=") && line.length() > 4)
+                date.setDays(stoi(line.substr(4, line.length() - 4)));
+            else if(startsWith(line, "HOUR=") && line.length() > 5)
+                date.setHours(stoi(line.substr(5, line.length() - 5)));
+            else if(startsWith(line, "MINUTE=") && line.length() > 7)
+                date.setMinutes(stoi(line.substr(7, line.length() - 7)));
+            else if(startsWith(line, "SECOND=") && line.length() > 7)
+                date.setSeconds(stoi(line.substr(7, line.length() - 7)));
             else
-                cerr << "\nFailed to load particle! : \n" << line << endl;
+            {    
+                istringstream iss(line);
+                vector<string> results(istream_iterator<string>{iss},
+                                         istream_iterator<string>());
+                if(list.AddNode(results))
+                    cerr << ".";
+                else
+                    cerr << "\nFailed to load particle! : \n" << line << endl;
+            }
         }        
         getline(in, line);
     }

@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 {
     Simulation sim;
     bool dragging = false;
+    bool updateScreen = true;
     if(argc > 3)
     {
         cerr << "Syntax is 'space2d [particles file] [settings file]'"
@@ -91,7 +92,25 @@ int main(int argc, char* argv[])
             if(event.type == sf::Event::KeyPressed)
             {
                 if(event.key.code == sf::Keyboard::Space)
+                {
                     sim.paused = !sim.paused;
+                    cout << sim.tick << ", [" << sim.date << "]: Pause: " << sim.paused << endl;
+                }
+                if(event.key.code == sf::Keyboard::P) // Toggle screen refresh
+                {
+                    updateScreen = !updateScreen;
+                    cout << sim.tick <<", [" << sim.date << "]: Update screen: " << updateScreen << endl;
+                }
+                if(event.key.code == sf::Keyboard::L) // Toggle muting console logging
+                {
+                    sim.muteConsole = !sim.muteConsole;
+                    cout << sim.tick << ", [" << sim.date << "]: Mute console: " << sim.muteConsole << endl;
+                }
+                if(event.key.code == sf::Keyboard::V) // Toggle muting console logging
+                {
+                    sim.verbose = !sim.verbose;
+                    cout << sim.tick << ", [" << sim.date << "]: Verbose: " << sim.verbose << endl;
+                }
                 if(event.key.code == sf::Keyboard::Period && sim.paused)
                     sim.Simulate();
             }
@@ -135,7 +154,8 @@ int main(int argc, char* argv[])
             cur = cur->next;
         }      
 
-        window.display();
+        if(updateScreen) 
+            window.display();
     }
 
     return 0;
