@@ -28,27 +28,40 @@ int main(int argc, char* argv[])
     }
     string settingsFilename = "cfg/settings.cfg";
     string particleFilename = "dat/particles.dat";
-    if(argc > 1)
+    if (argc == 1)
     {
-        // Make sure files exist
-        particleFilename = (argv[1]);
-        if(fileExists(particleFilename) == false)
-            particleFilename = "dat/"+particleFilename;
-        if(fileExists(particleFilename) == false)
-        {
-            cerr << "Cannot access data file \"" << (argv[1]) << "\" either in ./ or ./dat!";
-            return -1;
-        }
+        // Search for saved .cfg and .dat, otherwise load defaults
+        if(fileExists("cfg/saved_settings.cfg"))
+            settingsFilename = "cfg/saved_settings.cfg";
+
+        if(fileExists("dat/saved_particles.dat"))
+            particleFilename = "dat/saved_particles.dat";
     }
-    if(argc > 2)
+
+    else 
     {
-        settingsFilename = (argv[2]);
-        if(fileExists(settingsFilename) == false)
-            settingsFilename = "cfg/"+settingsFilename;
-        if(fileExists(settingsFilename) == false)
+        if(argc > 1)
         {
-            cerr << "Cannot access configuration file \"" << (argv[2]) << "\" either in ./ or ./cfg!";
-            return -1;
+            // Make sure files exist
+            particleFilename = (argv[1]);
+            if(fileExists(particleFilename) == false)
+                particleFilename = "dat/"+particleFilename;
+            if(fileExists(particleFilename) == false)
+            {
+                cerr << "Cannot access data file \"" << (argv[1]) << "\" either in ./ or ./dat!";
+                return -1;
+            }
+        }
+        if(argc > 2)
+        {
+            settingsFilename = (argv[2]);
+            if(fileExists(settingsFilename) == false)
+                settingsFilename = "cfg/"+settingsFilename;
+            if(fileExists(settingsFilename) == false)
+            {
+                cerr << "Cannot access configuration file \"" << (argv[2]) << "\" either in ./ or ./cfg!";
+                return -1;
+            }
         }
     }
     sim.LoadSettings(settingsFilename);
@@ -75,14 +88,22 @@ int main(int argc, char* argv[])
         {
             bool recenter = false;
             if (event.type == sf::Event::Closed)
+            {
+                cerr << "Closing Space2d..." << endl;
+                // Save settings and particles
+
+                sim.SaveSettings();
+                sim.SaveParticles();
+
                 window.close();
+            }
             if(event.type ==sf::Event::Resized)
             {
                 sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
                 window.setView(sf::View(visibleArea));
             }
             view = window.getView();
-            if(event.type == sf::Event::MouseWheelMoved)
+            if(updateScreen && event.type == sf::Event::MouseWheelMoved)
             {
                 if(event.mouseWheel.delta < 0)
                 {
@@ -101,6 +122,12 @@ int main(int argc, char* argv[])
                     sim.paused = !sim.paused;
                     cout << sim.tick << ", [" << sim.date << "]: Pause: " << sim.paused << endl;
                 }
+                if(event.key.code == sf::Keyboard::T) // Toggle show ticks
+                {
+                    sim.showTicks = !sim.showTicks;
+                    cout << sim.tick << ", [" << sim.date << "]: Show time: " << sim.showTicks << endl;
+
+                }
                 if(event.key.code == sf::Keyboard::P) // Toggle screen refresh
                 {
                     updateScreen = !updateScreen;
@@ -118,7 +145,7 @@ int main(int argc, char* argv[])
                 }
                 if(event.key.code == sf::Keyboard::Period && sim.paused)
                     sim.Simulate();
-                if(event.key.code == sf::Keyboard::Tab) // Target next particle
+                if(event.key.code == sf::Keyboard::Tab && updateScreen) // Target next particle
                 {
                     Node * nextTarget = nullptr;
                     if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
@@ -158,7 +185,7 @@ int main(int argc, char* argv[])
                         cout << "Targetting " << target->particle->name << "." << endl;
                 }
             }
-            if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+            if(updateScreen && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
                 mPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 dragging = true;
@@ -167,7 +194,7 @@ int main(int argc, char* argv[])
             {
                 dragging = false;
             }
-            else if(event.type == sf::Event::MouseMoved && dragging)
+            else if(updateScreen && event.type == sf::Event::MouseMoved && dragging)
             {
                 sf::Vector2f curPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 float xMove = mPos.x - curPos.x;

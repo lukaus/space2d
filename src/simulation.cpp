@@ -41,7 +41,9 @@ void Simulation::Simulate()
     tick++;
     date.addSeconds(timeScale);
     if(!muteConsole)
-        cout << "\n===============================\nt= " << tick << ", time=[" << date << "]" << endl; 
+        cout << "\n===============================\n";
+    if(showTicks)
+        cout << "t= " << tick << ", time=[" << date << "]" << endl; 
     Node* cur = list.head;
     for(int i = 0; i < list.count; i++)
     {
@@ -224,4 +226,57 @@ void Simulation::LoadParticles(string filename)
     }
     in.close();
     cerr << "done." << endl;
+}
+void Simulation::SaveSettings()
+{
+    ofstream out;
+    out.open("cfg/saved_settings.cfg");
+
+    if (paused)
+        out << "PAUSED\n"; 
+    if (verbose)
+        out << "VERBOSE\n";
+    out << "GRAV=" << gravityConstant << endl;
+    out << "X=" << winX << endl;
+    out << "X=" << winY << endl;
+    out << "TPS=" << ticksPerSecond << endl;
+    out << "TRMX=" << trailMaxLen << endl;
+    out << "TRFQ=" << trailFreq << endl;
+    out << "TRRA=" << trailRadiusMultiplier << endl;
+    out << "DSCL=" << distanceScale << endl;
+    out << "TSCL=" << timeScale << endl;
+    out.close();
+}
+void Simulation::SaveParticles()
+{
+    ofstream out;
+    out.open("dat/saved_particles.dat");
+   
+    out << "YEAR=" << date.getYear() << endl; 
+    out << "MONTH=" << date.getMonth()+1 << endl; 
+    out << "DAY=" << date.getDay() << endl; 
+    out << "HOUR=" << date.getHour() << endl; 
+    out << "MINUTE=" << date.getMinute() << endl; 
+    out << "SECOND=" << date.getSecond() << endl; 
+
+    Node* cur = list.head;
+    while( cur != nullptr)
+    {
+        out << cur->particle->name << " ";
+        out << cur->particle->x << " ";
+        out << cur->particle->y << " ";
+        out << cur->particle->mass << " ";
+        out << cur->particle->x_vel << " ";
+        out << cur->particle->y_vel << " ";
+        out << cur->particle->radius << " ";
+        out << int(cur->pix->getFillColor().r) << " ";
+        out << int(cur->pix->getFillColor().g) << " ";
+        out << int(cur->pix->getFillColor().b) << " ";
+        out << cur->trailRadius << " ";
+        out << int(cur->trailColor.r) << " ";
+        out << int(cur->trailColor.g) << " ";
+        out << int(cur->trailColor.b) << endl;
+        cur = cur->next;
+    }
+    out.close();
 }

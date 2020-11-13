@@ -33,9 +33,13 @@ long double x_part(long double angle, long double magnitude);
     bool verbose = false;
     bool paused = false;
     bool muteConsole = false;
+    bool showTicks = true;
 
     void Simulate();
     void LoadSettings(std::string filename);
     void LoadParticles(std::string filename);
+
+    void SaveSettings();
+    void SaveParticles();
 };
 #endif

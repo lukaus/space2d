@@ -100,6 +100,35 @@ void Date::setSeconds(unsigned int s)
     Date::propogate();
 }
 
+int Date::getYear()
+{
+    return year;
+}
+
+int Date::getMonth()
+{
+    return month;
+}
+
+int Date::getDay()
+{
+    return day;
+}
+
+int Date::getHour()
+{
+    return hour;
+}
+
+int Date::getMinute()
+{
+    return minute;
+}
+
+int Date::getSecond()
+{
+    return second;
+}
 
 void Date::propogate()
 {

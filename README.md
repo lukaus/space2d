@@ -6,7 +6,6 @@ i want a 2d gravity sim
 uses [SFML](https://www.sfml-dev.org/)
 
 to add:
-    - save and exit simulation, ability to resume
     - ability to display approx. date/time and change tick from 1t=1/60th of a second up to 1t=1yr
         - This may be difficult to do without breaking the simulation. An idea:
             - have a "significant body" threshold that will update a list for each object of bodies that are exerting a "significant" force on it (as in, more than the threshold). Any object exerting less than the threshold amount of force will be excluded from the simulation between timescale ticks. This value will be updated each timescale tick (and not done when timescale = 1)

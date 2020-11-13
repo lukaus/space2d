@@ -36,6 +36,15 @@ class Date
     void setSeconds(unsigned int );
 
 
+    int getYear();
+    int getMonth();
+    int getDay();
+
+    int getHour();
+    int getMinute();
+    int getSecond();
+    
+
     bool isLeapYear();
 
     void propogate();
