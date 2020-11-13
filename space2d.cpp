@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     sim.LoadSettings(settingsFilename);
     sim.LoadParticles(particleFilename);
 
-    sf::RenderWindow window(sf::VideoMode(sim.winX, sim.winY), "Space2d v0.9");
+    sf::RenderWindow window(sf::VideoMode(sim.winX, sim.winY), "Space2d v0.99");
     window.setFramerateLimit(sim.ticksPerSecond);
 
     cerr << "Window is (" << sim.winX << ", " << sim.winY << ")\n";
