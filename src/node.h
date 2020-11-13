@@ -26,7 +26,7 @@ class Node
       void SetColor(sf::Color col);
       void SetPos(double long x, double long y);
       void Update(Simulation* sim);
-      void UpdatePos();
+      void UpdatePos(Simulation* sim);
       void UpdateTrail(Simulation* sim);
       void Status();
 

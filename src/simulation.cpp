@@ -39,7 +39,7 @@ long double Simulation::y_part(long double angle, long double magnitude) // Get 
 void Simulation::Simulate()
 {
     tick++;
-    date.addSeconds(1);
+    date.addSeconds(timeScale);
     if(!muteConsole)
         cout << "\n===============================\nt= " << tick << ", time=[" << date << "]" << endl; 
     Node* cur = list.head;

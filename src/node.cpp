@@ -47,9 +47,9 @@ void Node::SetPos(double long x, double long y)
 void Node::Update(Simulation* sim)
 {
     this->UpdateTrail(sim);
-    this->UpdatePos();
+    this->UpdatePos(sim);
 }
-void Node::UpdatePos()
+void Node::UpdatePos(Simulation* sim)
 {
     this->SetPos(this->particle->x + this->particle->x_vel, 
                  this->particle->y + this->particle->y_vel);

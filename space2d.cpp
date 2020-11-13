@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
         if(!sim.paused)
             sim.Simulate();
         sf::Event event;
+        sf::View view = window.getView();
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -77,7 +78,7 @@ int main(int argc, char* argv[])
                 sf::FloatRect visibleArea(0.f, 0.f, event.size.width, event.size.height);
                 window.setView(sf::View(visibleArea));
             }
-            sf::View view = window.getView();
+            view = window.getView();
             if(event.type == sf::Event::MouseWheelMoved)
             {
                 if(event.mouseWheel.delta < 0)
@@ -130,7 +131,6 @@ int main(int argc, char* argv[])
                 float yMove = mPos.y - curPos.y;
                 view.move(xMove, yMove);
             }
-            mPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
             window.setView(view);
         }
 
