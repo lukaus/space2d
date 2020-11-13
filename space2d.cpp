@@ -135,12 +135,10 @@ int main(int argc, char* argv[])
                     {
                         if (target == nullptr)
                         {
-                        cerr << "getting.. " << endl;
                             nextTarget = sim.list.head;
                         }
                         else
                             nextTarget = target->next;
-
                     }
 
                     if(sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))

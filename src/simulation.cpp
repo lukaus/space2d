@@ -161,7 +161,7 @@ void Simulation::LoadSettings(string filename)
             trailFreq = stoi(line.substr(5, line.length() - 5));
 
         else if(startsWith(line, "TRRA=") && line.length() > 5)
-            trailRadius = stof(line.substr(5, line.length() - 5));
+            trailRadiusMultiplier = stof(line.substr(5, line.length() - 5));
 
         else if(startsWith(line, "DSCL=") && line.length() > 5)
             distanceScale = stof(line.substr(5, line.length() - 5));

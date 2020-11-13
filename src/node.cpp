@@ -64,9 +64,11 @@ void Node::UpdateTrail(Simulation* sim)
             if(sim->trailMaxLen > 0)
             {
                 this->trailHead = new Node();
-                this->trailHead->pix->setRadius(sim->trailRadius);
+
+                this->trailHead->pix->setRadius(this->particle->radius * sim->trailRadiusMultiplier);
+
                 this->trailHead->SetColor(this->trailColor);
-                this->trailHead->SetPos(round(this->particle->x), round(this->particle->y));
+                this->trailHead->SetPos((this->particle->x) + (this->particle->radius * sim->trailRadiusMultiplier), (this->particle->y + (this->particle->radius * sim->trailRadiusMultiplier)));
                 this->trailHead->next = nullptr;
                 this->trailHead->last = nullptr;
                 this->trailCount++;
@@ -74,9 +76,8 @@ void Node::UpdateTrail(Simulation* sim)
         }
         else
         {
-            //cerr << "\n\nNow for secondary trail\n\n";
             Node * n = new Node();
-            n->pix->setRadius(sim->trailRadius);
+            n->pix->setRadius(sim->trailRadiusMultiplier * this->particle->radius);
 
             // Get last node
             Node * cur = trailHead;
@@ -86,7 +87,7 @@ void Node::UpdateTrail(Simulation* sim)
             cur->next = n;
             n->last = cur;
 
-            n->SetPos(round(this->particle->x), round(this->particle->y));
+            n->SetPos((this->particle->x) + (this->particle->radius * sim->trailRadiusMultiplier), (this->particle->y + (this->particle->radius * sim->trailRadiusMultiplier)));
             n->SetColor(this->trailColor);
 
             this->trailCount++;
