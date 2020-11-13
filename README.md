@@ -11,7 +11,6 @@ to add:
             - have a "significant body" threshold that will update a list for each object of bodies that are exerting a "significant" force on it (as in, more than the threshold). Any object exerting less than the threshold amount of force will be excluded from the simulation between timescale ticks. This value will be updated each timescale tick (and not done when timescale = 1)
     - HUD stuff (targeted planet, current date and time, pause/verbose status, TPS)
         - click planet to see orbital properties 
-    - adjust TPS on the fly
     - adjust time/tick scale (on the fly too)
     - Multithread tick processing
     - separate display from ticks

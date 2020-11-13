@@ -117,6 +117,30 @@ int main(int argc, char* argv[])
             }
             if(event.type == sf::Event::KeyPressed)
             {
+                if(event.key.code == sf::Keyboard::Equal) // Increase TPS
+                {
+                    int addTps = 1;
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+                        addTps *= 10;
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+                        addTps *= 100;
+                    sim.ticksPerSecond += addTps;
+                    window.setFramerateLimit(sim.ticksPerSecond);
+                    cout << sim.tick << ", [" << sim.date << "]: TicksPerSecond: " << sim.ticksPerSecond << endl;
+                }
+                if(event.key.code == sf::Keyboard::Hyphen) // Increase TPS
+                {
+                    int addTps = -1;
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+                        addTps *= 10;
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+                        addTps *= 100;
+                    sim.ticksPerSecond += addTps;
+                    if (sim.ticksPerSecond < 0)
+                        sim.ticksPerSecond = 0;
+                    window.setFramerateLimit(sim.ticksPerSecond);
+                    cout << sim.tick << ", [" << sim.date << "]: TicksPerSecond: " << sim.ticksPerSecond << endl;
+                }
                 if(event.key.code == sf::Keyboard::Space)
                 {
                     sim.paused = !sim.paused;
