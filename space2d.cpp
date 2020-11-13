@@ -17,6 +17,7 @@ bool fileExists(const string& fn)
 int main(int argc, char* argv[])
 {
     Simulation sim;
+    Node * target = nullptr;
     bool dragging = false;
     bool updateScreen = true;
     if(argc > 3)
@@ -69,8 +70,10 @@ int main(int argc, char* argv[])
             sim.Simulate();
         sf::Event event;
         sf::View view = window.getView();
+
         while (window.pollEvent(event))
         {
+            bool recenter = false;
             if (event.type == sf::Event::Closed)
                 window.close();
             if(event.type ==sf::Event::Resized)
@@ -83,12 +86,13 @@ int main(int argc, char* argv[])
             {
                 if(event.mouseWheel.delta < 0)
                 {
-                    view.zoom(1.25f);
+                    view.zoom(10.0f / 9.0f);
                 }
                 else if(event.mouseWheel.delta > 0)
                 {
-                    view.zoom(0.8f);
+                    view.zoom(9.0f / 10.0f);
                 }
+                window.setView(view);
             }
             if(event.type == sf::Event::KeyPressed)
             {
@@ -114,6 +118,47 @@ int main(int argc, char* argv[])
                 }
                 if(event.key.code == sf::Keyboard::Period && sim.paused)
                     sim.Simulate();
+                if(event.key.code == sf::Keyboard::Tab) // Target next particle
+                {
+                    Node * nextTarget = nullptr;
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::RShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+                    {
+                        // Go to last/tail instead of next/head
+                        if (target == nullptr)
+                           nextTarget = sim.list.tail; 
+                        else
+                        {
+                            nextTarget = target->last;
+                        }
+                    }
+                    else
+                    {
+                        if (target == nullptr)
+                        {
+                        cerr << "getting.. " << endl;
+                            nextTarget = sim.list.head;
+                        }
+                        else
+                            nextTarget = target->next;
+
+                    }
+
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::RControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+                    {
+                        nextTarget = nullptr;
+                    }
+                    else if (nextTarget == nullptr)
+                    {
+                        recenter = true;
+                        target = nullptr;
+                    }
+                    target = nextTarget;
+
+                    if (target == nullptr)
+                        cout << "No target.\n";
+                    else
+                        cout << "Targetting " << target->particle->name << "." << endl;
+                }
             }
             if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
@@ -131,9 +176,23 @@ int main(int argc, char* argv[])
                 float yMove = mPos.y - curPos.y;
                 view.move(xMove, yMove);
             }
-            window.setView(view);
-        }
 
+            // Adjust view to target
+            if(recenter)
+            {
+                float xRatio = window.getSize().x; 
+                float yRatio = window.getSize().y;
+
+                sf::FloatRect visibleArea(0.f, 0.f, window.getSize().x, window.getSize().y);
+                view = sf::View(visibleArea);
+            }
+        }
+        if(target != nullptr) // Center on target
+            view.setCenter(target->particle->x, target->particle->y);
+
+
+
+        window.setView(view);
         window.clear();
         Node* cur = sim.list.head;
         for(int i = 0; i < sim.list.count; i++)

@@ -42,7 +42,7 @@ void Node::SetPos(double long x, double long y)
         particle->x = x;
         particle->y = y;
     }
-    pix->setPosition(sf::Vector2f((float)x,(float)y));
+    pix->setPosition(sf::Vector2f((float)x - particle->radius,(float)y - particle->radius));
 }
 void Node::Update(Simulation* sim)
 {

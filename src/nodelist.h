@@ -9,6 +9,7 @@ class NodeList
 {
   public:
       Node* head = nullptr;
+      Node* tail = nullptr;
       int count = 0;
 
       Node operator[](int idx);

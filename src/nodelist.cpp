@@ -73,6 +73,7 @@ bool NodeList::AddNode(Node* newNode)
     if(head == nullptr)
     {
         head = newNode;
+        tail = newNode;
         head->next = nullptr;
         head->last = nullptr;
     }
@@ -85,6 +86,7 @@ bool NodeList::AddNode(Node* newNode)
 
         newNode->last = cur;
         newNode->next = nullptr;
+        tail = newNode;
     }
     count++;
     return true;
