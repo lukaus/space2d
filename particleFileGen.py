@@ -69,6 +69,6 @@ with open(outfile, 'w') as fp:
         print("angle= " + str(angle), end="\n")
         yvel = math.cos(angle) * velocity / 10000
         xvel = math.sin(angle) * velocity / 10000
-        fp.write(f"{p} {planets[p][0]*AU + 250} {planets[p][1]*AU + 250} {planet_vals[p]['m']} {xvel} {yvel} 1 {255} {255} {255} 0.5 50 50 50\n") # Name, X, Y, Mass, XVEL, YVEL, Radius, R, G, B, TrailRadius, trailRed, trailGreen, trailBlue
+        fp.write(f"{p} {planets[p][0]*AU + 250} {planets[p][1]*AU + 250} {planet_vals[p]['m']} {xvel} {yvel} 1 {planet_vals[p]['color'][0]} {planet_vals[p]['color'][1]} {planet_vals[p]['color'][2]} 0.5 50 50 50\n") # Name, X, Y, Mass, XVEL, YVEL, Radius, R, G, B, TrailRadius, trailRed, trailGreen, trailBlue
 
 
