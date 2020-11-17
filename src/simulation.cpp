@@ -238,7 +238,7 @@ void Simulation::SaveSettings()
         out << "VERBOSE\n";
     out << "GRAV=" << gravityConstant << endl;
     out << "X=" << winX << endl;
-    out << "X=" << winY << endl;
+    out << "Y=" << winY << endl;
     out << "TPS=" << ticksPerSecond << endl;
     out << "TRMX=" << trailMaxLen << endl;
     out << "TRFQ=" << trailFreq << endl;
