@@ -8,5 +8,4 @@ Particle::Particle()
     x_vel = 0.0;
     y_vel = 0.0;
     name = "<UNKNOWN>";
-    radius = 1.0;
 }

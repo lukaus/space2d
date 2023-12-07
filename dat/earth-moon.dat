@@ -1,0 +1,34 @@
+# Particle definition file
+# particle listed below  as: ([] are optional arguments
+# Name X Y MASS [X_VEL=0] [Y_VEL=0] [RADIUS=0.5] [RedValue=255 GreenValue=255 BlueValue=255] [TrailRadius=0.5] [TrailRed=245 TrailGreen=245 TrailBlue=220]
+# ^ this syntax is pretty delicate unfortunately, pay attention to the grouping (either all three color values for a color or no values must be defined)
+
+# These particles assume you are using settings.cfg
+
+
+# This file should roughly represent the location of the planets (and dwarf planetoids or whatever) 
+# at 00:00 on Jan 1 2000
+YEAR=2000
+MONTH=1
+DAY=1
+HOUR=0
+MINUTE=0
+SECOND=0
+
+# Sun (assumes settings.cfg)
+Sun 250 250 1.989E30 0 0 3 255 255 0
+# Mercury
+Mercury 180 250 3.285E23 0 -1.172 1 219 206 202 0.5 50 50 50
+
+# Venus
+Venus 250 358 4.867E24 -1.1086 0 1 201 160 220 0.5 50 50 50
+
+# Earth
+Earth 397 250 5.972E24 0 0.95828 0.3 0 128 255 1 50 50 50
+
+# Moon
+Moon 398 250 7.342e+22 0 0.973 0.1 123 128 155 0.1 50 50 50
+
+# Mars
+Mars 259 1 6.39E23 0.696969 0 1 250 100 100 1 50 50 50
+

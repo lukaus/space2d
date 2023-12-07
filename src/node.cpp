@@ -42,7 +42,7 @@ void Node::SetPos(double long x, double long y)
         particle->x = x;
         particle->y = y;
     }
-    pix->setPosition(sf::Vector2f((float)x - particle->radius,(float)y - particle->radius));
+    pix->setPosition(sf::Vector2f((float)x,(float)y));
 }
 void Node::Update(Simulation* sim)
 {
@@ -65,10 +65,11 @@ void Node::UpdateTrail(Simulation* sim)
             {
                 this->trailHead = new Node();
 
-                this->trailHead->pix->setRadius(this->particle->radius * sim->trailRadiusMultiplier);
+                this->trailHead->pix->setRadius(this->pix->getRadius() * sim->trailRadiusMultiplier);
+                this->trailHead->pix->setOrigin(this->pix->getRadius() * sim->trailRadiusMultiplier, this->pix->getRadius() * sim->trailRadiusMultiplier);
 
                 this->trailHead->SetColor(this->trailColor);
-                this->trailHead->SetPos((this->particle->x) + (this->particle->radius * sim->trailRadiusMultiplier), (this->particle->y + (this->particle->radius * sim->trailRadiusMultiplier)));
+                this->trailHead->SetPos((this->particle->x), (this->particle->y));
                 this->trailHead->next = nullptr;
                 this->trailHead->last = nullptr;
                 this->trailCount++;
@@ -77,7 +78,9 @@ void Node::UpdateTrail(Simulation* sim)
         else
         {
             Node * n = new Node();
-            n->pix->setRadius(sim->trailRadiusMultiplier * this->particle->radius);
+            cout << sim->trailRadiusMultiplier << " * " << this->pix->getRadius() << endl; 
+            n->pix->setRadius(sim->trailRadiusMultiplier * this->pix->getRadius());
+            n->pix->setOrigin(n->pix->getRadius(), n->pix->getRadius());
 
             // Get last node
             Node * cur = trailHead;
@@ -87,7 +90,7 @@ void Node::UpdateTrail(Simulation* sim)
             cur->next = n;
             n->last = cur;
 
-            n->SetPos((this->particle->x) + (this->particle->radius * sim->trailRadiusMultiplier), (this->particle->y + (this->particle->radius * sim->trailRadiusMultiplier)));
+            n->SetPos((this->particle->x), (this->particle->y ));
             n->SetColor(this->trailColor);
 
             this->trailCount++;

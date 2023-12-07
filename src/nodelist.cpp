@@ -36,6 +36,7 @@ bool NodeList::AddNode(std::vector<std::string> part)
         {
             // particle radius
             newNode->pix->setRadius(stof(part[6]));
+            newNode->pix->setOrigin( newNode->pix->getRadius(), newNode->pix->getRadius()  );
         }
 
         if(part.size() > 9)

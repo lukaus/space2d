@@ -27,7 +27,7 @@ long double x_part(long double angle, long double magnitude);
     int ticksPerSecond = 0;
     int trailMaxLen = 200;
     int trailFreq = 500000;
-    float trailRadiusMultiplier = 0.5;
+    float trailRadiusMultiplier = 0.3;
     NodeList list;
 
     bool verbose = false;

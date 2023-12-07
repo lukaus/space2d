@@ -16,10 +16,14 @@ bool fileExists(const string& fn)
 
 int main(int argc, char* argv[])
 {
+
+    // initialization
     Simulation sim;
     Node * target = nullptr;
     bool dragging = false;
     bool updateScreen = true;
+
+    // parse arguments
     if(argc > 3)
     {
         cerr << "Syntax is 'space2d [particles file] [settings file]'"
@@ -28,6 +32,8 @@ int main(int argc, char* argv[])
     }
     string settingsFilename = "cfg/settings.cfg";
     string particleFilename = "dat/particles.dat";
+
+    // Load settings and data
     if (argc == 1)
     {
         // Search for saved .cfg and .dat, otherwise load defaults
@@ -67,6 +73,8 @@ int main(int argc, char* argv[])
     sim.LoadSettings(settingsFilename);
     sim.LoadParticles(particleFilename);
 
+
+    // Create graphical stuff
     sf::RenderWindow window(sf::VideoMode(sim.winX, sim.winY), "Space2d v0.99");
     window.setFramerateLimit(sim.ticksPerSecond);
 
@@ -213,6 +221,7 @@ int main(int argc, char* argv[])
             {
                 mPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
                 dragging = true;
+                target=nullptr;
             }
             else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
@@ -241,29 +250,31 @@ int main(int argc, char* argv[])
 
 
 
-        window.setView(view);
-        window.clear();
-        Node* cur = sim.list.head;
-        for(int i = 0; i < sim.list.count; i++)
-        {   
-            // Draw node's trail
-            Node * trailCur = cur->trailHead;
-            if(trailCur != nullptr)
-            {
-                for( int j = 0; j < cur->trailCount; j++)
+        if (updateScreen)
+        {
+            window.setView(view);
+            window.clear();
+            Node* cur = sim.list.head;
+            for(int i = 0; i < sim.list.count; i++)
+            {   
+                // Draw node's trail
+                Node * trailCur = cur->trailHead;
+                if(trailCur != nullptr)
                 {
-                    window.draw(*trailCur->pix);
-                    trailCur = trailCur->next;
+                    for( int j = 0; j < cur->trailCount; j++)
+                    {
+                        window.draw(*trailCur->pix);
+                        trailCur = trailCur->next;
+                    }
                 }
-            }
-            // Then draw node itself
-            window.draw(*cur->pix);
+                // Then draw node itself
+                window.draw(*cur->pix);
 
-            cur = cur->next;
-        }      
+                cur = cur->next;
+            }      
 
-        if(updateScreen) 
-            window.display();
+             window.display();
+        }
     }
 
     return 0;

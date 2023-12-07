@@ -268,7 +268,6 @@ void Simulation::SaveParticles()
         out << cur->particle->mass << " ";
         out << cur->particle->x_vel << " ";
         out << cur->particle->y_vel << " ";
-        out << cur->particle->radius << " ";
         out << int(cur->pix->getFillColor().r) << " ";
         out << int(cur->pix->getFillColor().g) << " ";
         out << int(cur->pix->getFillColor().b) << " ";

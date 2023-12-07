@@ -15,7 +15,6 @@ class Particle
         long double mass = 0.0;
         long double x_vel = 0.0;
         long double y_vel = 0.0;
-        double radius = 0.0;
 
         Particle();
 
